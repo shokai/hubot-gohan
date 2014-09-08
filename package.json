@@ -1,5 +1,6 @@
 {
   "name": "hubot-gohan",
+  "private": true,
   "version": "0.0.0",
   "description": "recommend today's Gohan (ごはん)",
   "main": "scripts/hubot-gohan.coffee",

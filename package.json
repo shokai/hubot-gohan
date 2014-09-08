@@ -18,6 +18,7 @@
     "cheerio": "*",
     "debug": "*",
     "lodash": "*",
+    "node-cache": "*",
     "request": "*"
   },
   "devDependencies": {

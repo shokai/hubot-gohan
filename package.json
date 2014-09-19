@@ -17,6 +17,7 @@
   "dependencies": {
     "cheerio": "*",
     "debug": "*",
+    "es6-promise": "^1.0.0",
     "lodash": "*",
     "node-cache": "*",
     "request": "*"

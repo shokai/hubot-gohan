@@ -1,3 +1,6 @@
 language: node_js
 node_js:
-  - 0.10
+  - "0.10"
+notifications:
+  slack:
+    secure: K06WpZUP++Taml+rF5p9YDQdGNvveCWP7RCJF5qwSKrgNEW46IrWTcW4Kxa/S7ieaYthXSdpNBmmSkaCEOlkbbBMCzDNi/ej3pVpF6peui7DFCcQslkYnu0dJW5GHtb6ZgU2Wg512MRs5unTBE4D29CgHMY8dOXjXYnTWfuAu4s=

@@ -13,13 +13,12 @@ describe 'Gohan', ->
 
   describe 'method "getPages"', ->
 
-    it 'should callback Array of pages', (done) ->
+    it 'should callback Array of pages', ->
       @timeout 5000
 
       gohan.getPages "http://ja.wikipedia.org/wiki/Category:料理"
       .then (pages) ->
         assert.equal pages instanceof Array, true
-        done()
 
 
   it 'sohuld have method "getGohan"', ->
@@ -27,11 +26,10 @@ describe 'Gohan', ->
 
   describe 'method "getGohan"', ->
 
-    it 'should callback the gohan', (done) ->
+    it 'should callback the gohan', ->
       @timeout 5000
 
       gohan.getGohan()
       .then (res) ->
         assert.equal typeof res['title'], 'string', '"title" property'
         assert.equal /^https?:\/\/.+/.test(res['url']), true, '"url" property'
-        done()

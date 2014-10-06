@@ -44,18 +44,15 @@ module.exports = class Gohan
     debug 'getting Gohan..'
     @getPagesCached "#{@baseUrl}/wiki/Category:料理"
     .then (pages) =>
-      return new Promise (resolve) =>
-        categories = _.filter pages, (page) -> /^\/wiki\/Category:/.test page.link
-        category = _.sample categories
-        resolve category
+      categories = _.filter pages, (page) -> /^\/wiki\/Category:/.test page.link
+      return _.sample categories
     .then (category) =>
       @getPagesCached "#{@baseUrl}#{category.link}"
     .then (pages) =>
-      return new Promise (resolve) =>
-        pages = _.filter pages, (page) ->
-          !(/^\/wiki\/Category:/.test page.link) and
-          /^\/wiki\/.+/.test(page.link) and
-          page.title?
-        debug "got #{pages.length} pages"
-        gohan = _.sample pages
-        resolve {url: "#{@baseUrl}#{gohan.link}", title: gohan.title}
+      pages = _.filter pages, (page) ->
+        !(/^\/wiki\/Category:/.test page.link) and
+        /^\/wiki\/.+/.test(page.link) and
+        page.title?
+      debug "got #{pages.length} pages"
+      gohan = _.sample pages
+      return {url: "#{@baseUrl}#{gohan.link}", title: gohan.title}

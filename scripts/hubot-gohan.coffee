@@ -8,7 +8,7 @@
 #   @shokai
 
 path  = require 'path'
-Gohan = require path.join __dirname, 'gohan'
+Gohan = require path.join __dirname, '../lib/gohan'
 debug = require('debug')('hubot-gohan')
 {Promise} = require 'es6-promise'
 

@@ -1,8 +1,8 @@
 path = require 'path'
 require path.resolve 'tests', 'test_helper'
 
-assert     = require 'assert'
-Gohan = require path.resolve 'scripts', 'gohan'
+assert = require 'assert'
+Gohan  = require path.resolve 'lib', 'gohan'
 
 gohan = new Gohan
 

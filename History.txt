@@ -1,3 +1,8 @@
+=== 0.0.4 2014-10-06
+
+* use latest version npm
+* little fix for Promise
+
 === 0.0.3 2014-09-20
 
 * use es6-promise

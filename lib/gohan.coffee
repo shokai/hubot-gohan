@@ -44,9 +44,9 @@ module.exports = class Gohan
           link: decodeURI a.attribs?.href
           title: a.attribs?.title
 
-  getPageListCached: (url) ->
+  getPageListCached: (url) =>
     return new Promise (resolve, reject) =>
-      @cache.get "list::#{url}", (err, val) =>
+      @cache.get url, (err, val) =>
         if !err and val.hasOwnProperty url
           debug "cache hit (#{url})"
           return resolve val[url]
@@ -54,7 +54,7 @@ module.exports = class Gohan
         @getPageList url
         .then (pages) =>
           if pages instanceof Array and pages.length > 0
-            @cache.set "list::#{url}", pages
+            @cache.set url, pages
           return resolve pages
 
   getGohan: ->

@@ -14,31 +14,46 @@ module.exports = class Gohan
       stdTTL: 3600 # 1hour
       checkperiod: 120
 
-  getPageList: (url) ->
-    debug "getPageList(#{url})"
-    return new Promise (resolve, reject) ->
+  getDetail: (url_or_title) =>
+    return new Promise (resolve, reject) =>
+      url =
+        if /^https?:\/\/.+/.test url_or_title
+          url_or_title
+        else
+          "#{@baseUrl}/wiki/#{url_or_title}"
+      debug "getDetail(#{url})"
       request url, (err, res, body) ->
-        if err
-          reject err
-          return
+        if err or res.statusCode isnt 200
+          return reject err or res
         $ = cheerio.load body
-        resolve _.map $('#bodyContent a'), (a) ->
+        return resolve
+          title: $('h1').text()
+          description: $('div#bodyContent p').text()
+
+
+  getPageList: (url) ->
+    return new Promise (resolve, reject) ->
+      debug "getPageList(#{url})"
+      request url, (err, res, body) ->
+        if err or res.statusCode isnt 200
+          return reject err or res
+        $ = cheerio.load body
+        return resolve _.map $('#bodyContent a'), (a) ->
           link: decodeURI a.attribs?.href
           title: a.attribs?.title
 
   getPageListCached: (url) ->
     return new Promise (resolve, reject) =>
-      @cache.get url, (err, val) =>
+      @cache.get "list::#{url}", (err, val) =>
         if !err and val.hasOwnProperty url
           debug "cache hit (#{url})"
-          resolve val[url]
-          return
+          return resolve val[url]
 
         @getPageList url
         .then (pages) =>
           if pages instanceof Array and pages.length > 0
-            @cache.set url, pages
-          resolve pages
+            @cache.set "list::#{url}", pages
+          return resolve pages
 
   getGohan: ->
     debug 'getting Gohan..'

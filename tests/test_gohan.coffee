@@ -33,3 +33,17 @@ describe 'Gohan', ->
       .then (res) ->
         assert.equal typeof res['title'], 'string', '"title" property'
         assert.equal /^https?:\/\/.+/.test(res['url']), true, '"url" property'
+
+  it 'should have method "getDetail"', ->
+    assert.equal typeof gohan['getDetail'], 'function'
+
+  describe 'method "getDetail"', ->
+
+    it 'should callback page detail', ->
+      @timeout 5000
+
+      gohan.getDetail('けんちん汁')
+      .then (res) ->
+        assert.equal res['title'], 'けんちん汁', '"title" property'
+        assert.equal typeof res['description'], 'string', '"detail" property'
+

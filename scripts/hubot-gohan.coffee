@@ -21,10 +21,16 @@ module.exports = (robot) ->
 
     gohan.getGohan()
     .then (res) ->
-      msg.send """
+      text = """
       @#{who} 「#{res.title}」を食べましょう
       #{res.url}
       """
+      if res.description
+        desc = res.description.match(/^([^。]+。)/)[0]
+        text += "\n\n#{desc}"
+      if res.image
+        text += "\n#{res.image}"
+      msg.send text
 
     .catch (err) ->
       msg.send """

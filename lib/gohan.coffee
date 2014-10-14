@@ -14,40 +14,57 @@ module.exports = class Gohan
       stdTTL: 3600 # 1hour
       checkperiod: 120
 
-  getPages: (url) ->
-    debug "getPages(#{url})"
-    return new Promise (resolve, reject) ->
+  getDetail: (url_or_title) =>
+    debug "getDetail(#{url_or_title})"
+    return new Promise (resolve, reject) =>
+      url =
+        if /^https?:\/\/.+/.test url_or_title
+          url_or_title
+        else
+          "#{@baseUrl}/wiki/#{url_or_title}"
       request url, (err, res, body) ->
-        if err
-          reject err
-          return
+        if err or res.statusCode isnt 200
+          return reject err or res
         $ = cheerio.load body
-        resolve _.map $('#bodyContent a'), (a) ->
+        image = $('img.thumbimage')[0]?.attribs?.src
+        image = "http:#{image}" if /^\/\/.+/.test image
+        return resolve
+          title: $('h1').text()
+          description: $('div#bodyContent p').text()
+          image: image
+
+  getPageList: (url) ->
+    return new Promise (resolve, reject) ->
+      debug "getPageList(#{url})"
+      request url, (err, res, body) ->
+        if err or res.statusCode isnt 200
+          return reject err or res
+        $ = cheerio.load body
+        return resolve _.map $('#bodyContent a'), (a) ->
           link: decodeURI a.attribs?.href
           title: a.attribs?.title
 
-  getPagesCached: (url) ->
+  getPageListCached: (url) ->
     return new Promise (resolve, reject) =>
-      @cache.get url, (err, val) =>
+      @cache.get "list::#{url}", (err, val) =>
         if !err and val.hasOwnProperty url
           debug "cache hit (#{url})"
-          resolve val[url]
-          return
+          return resolve val[url]
 
-        @getPages url
+        @getPageList url
         .then (pages) =>
           if pages instanceof Array and pages.length > 0
-            @cache.set url, pages
-          resolve pages
+            @cache.set "list::#{url}", pages
+          return resolve pages
 
   getGohan: ->
     debug 'getting Gohan..'
-    @getPagesCached "#{@baseUrl}/wiki/Category:料理"
+    @getPageListCached "#{@baseUrl}/wiki/Category:料理"
     .then (pages) =>
       categories = _.filter pages, (page) -> /^\/wiki\/Category:/.test page.link
       return _.sample categories
     .then (category) =>
-      @getPagesCached "#{@baseUrl}#{category.link}"
+      @getPageListCached "#{@baseUrl}#{category.link}"
     .then (pages) =>
       pages = _.filter pages, (page) ->
         !(/^\/wiki\/Category:/.test page.link) and
@@ -56,3 +73,9 @@ module.exports = class Gohan
       debug "got #{pages.length} pages"
       gohan = _.sample pages
       return {url: "#{@baseUrl}#{gohan.link}", title: gohan.title}
+    .then (page) =>
+      @getDetail page.url
+      .then (detail) ->
+        for k,v of detail
+          page[k] = v unless page.hasOwnProperty k
+        return page

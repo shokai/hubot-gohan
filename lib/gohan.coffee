@@ -14,8 +14,8 @@ module.exports = class Gohan
       stdTTL: 3600 # 1hour
       checkperiod: 120
 
-  getPages: (url) ->
-    debug "getPages(#{url})"
+  getPageList: (url) ->
+    debug "getPageList(#{url})"
     return new Promise (resolve, reject) ->
       request url, (err, res, body) ->
         if err
@@ -26,7 +26,7 @@ module.exports = class Gohan
           link: decodeURI a.attribs?.href
           title: a.attribs?.title
 
-  getPagesCached: (url) ->
+  getPageListCached: (url) ->
     return new Promise (resolve, reject) =>
       @cache.get url, (err, val) =>
         if !err and val.hasOwnProperty url
@@ -34,7 +34,7 @@ module.exports = class Gohan
           resolve val[url]
           return
 
-        @getPages url
+        @getPageList url
         .then (pages) =>
           if pages instanceof Array and pages.length > 0
             @cache.set url, pages
@@ -42,12 +42,12 @@ module.exports = class Gohan
 
   getGohan: ->
     debug 'getting Gohan..'
-    @getPagesCached "#{@baseUrl}/wiki/Category:料理"
+    @getPageListCached "#{@baseUrl}/wiki/Category:料理"
     .then (pages) =>
       categories = _.filter pages, (page) -> /^\/wiki\/Category:/.test page.link
       return _.sample categories
     .then (category) =>
-      @getPagesCached "#{@baseUrl}#{category.link}"
+      @getPageListCached "#{@baseUrl}#{category.link}"
     .then (pages) =>
       pages = _.filter pages, (page) ->
         !(/^\/wiki\/Category:/.test page.link) and

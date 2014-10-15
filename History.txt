@@ -1,3 +1,7 @@
+=== 0.0.5 2014-10-15
+
+* show gohan description and image  #2
+
 === 0.0.4 2014-10-06
 
 * use latest version npm

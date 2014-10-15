@@ -7,7 +7,7 @@ Recommend today's Gohan (ごはん|🍚), works with Hubot.
 - https://github.com/shokai/hubot-gohan
 - https://npmjs.org/package/hubot-gohan
 
-![screen shot](http://gyazo.com/742e56ecf153fbb04504ba059bb0e71f.png)
+![screen shot](http://i.gyazo.com/1831f7b1e9e3e3afcac8ba1bbaf1a0b0.png)
 
 Install
 -------

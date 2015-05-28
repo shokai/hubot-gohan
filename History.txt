@@ -1,3 +1,8 @@
+=== 0.0.6 2015-05-29
+
+* fix for latest request npm
+* bugfix cache
+
 === 0.0.5 2014-10-15
 
 * show gohan description and image  #2

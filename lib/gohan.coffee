@@ -47,9 +47,9 @@ module.exports = class Gohan
   getPageListCached: (url) =>
     return new Promise (resolve, reject) =>
       @cache.get url, (err, val) =>
-        if !err and val?.hasOwnProperty url
+        if !err and val?
           debug "cache hit (#{url})"
-          return resolve val[url]
+          return resolve val
 
         @getPageList url
         .then (pages) =>

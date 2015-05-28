@@ -46,5 +46,6 @@ describe 'Gohan', ->
       .then (res) ->
         assert.equal typeof res.title, 'string', '"title" property'
         assert.equal /^https?:\/\/.+/.test(res.url), true, '"url" property'
-        assert.equal /^https?:\/\/.+(.jpe?g|gif|png)/i.test(res.image), true, '"image" URL'
         assert.equal typeof res.description, 'string', '"description" property'
+        if res.image?
+          assert.equal /^https?:\/\/.+(.jpe?g|gif|png)/i.test(res.image), true, '"image" URL'

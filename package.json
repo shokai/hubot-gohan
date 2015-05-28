@@ -5,7 +5,8 @@
   "description": "recommend today's Gohan (ごはん)",
   "main": "scripts/hubot-gohan.coffee",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "watch": "grunt"
   },
   "keywords": [
     "hubot",
@@ -32,7 +33,7 @@
     "grunt-contrib-watch": "*",
     "grunt-notify": "*",
     "grunt-simple-mocha": "*",
-    "hubot": "^2.8.1",
+    "hubot": "^2.12",
     "mocha": "*"
   },
   "repository": {

@@ -22,7 +22,7 @@ module.exports = class Gohan
           url_or_title
         else
           "#{@baseUrl}/wiki/#{url_or_title}"
-      request url, (err, res, body) ->
+      request encodeURI(url), (err, res, body) ->
         if err or res.statusCode isnt 200
           return reject err or res
         $ = cheerio.load body
@@ -36,7 +36,7 @@ module.exports = class Gohan
   getPageList: (url) ->
     return new Promise (resolve, reject) ->
       debug "getPageList(#{url})"
-      request url, (err, res, body) ->
+      request encodeURI(url), (err, res, body) ->
         if err or res.statusCode isnt 200
           return reject err or res
         $ = cheerio.load body
@@ -47,7 +47,7 @@ module.exports = class Gohan
   getPageListCached: (url) =>
     return new Promise (resolve, reject) =>
       @cache.get url, (err, val) =>
-        if !err and val.hasOwnProperty url
+        if !err and val?.hasOwnProperty url
           debug "cache hit (#{url})"
           return resolve val[url]
 
@@ -77,5 +77,5 @@ module.exports = class Gohan
       @getDetail page.url
       .then (detail) ->
         for k,v of detail
-          page[k] = v unless page.hasOwnProperty k
+          page[k] = v unless page?.hasOwnProperty k
         return page

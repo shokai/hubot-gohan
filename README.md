@@ -2,7 +2,7 @@ Hubot Gohan
 ===========
 Recommend today's Gohan (ごはん|🍚), works with Hubot.
 
-[![Build Status](https://travis-ci.org/shokai/hubot-gohan.svg?branch=master)](https://travis-ci.org/shokai/hubot-gohan)
+[![Circle CI](https://circleci.com/gh/shokai/hubot-gohan.svg?style=svg)](https://circleci.com/gh/shokai/hubot-gohan)
 
 - https://github.com/shokai/hubot-gohan
 - https://npmjs.org/package/hubot-gohan

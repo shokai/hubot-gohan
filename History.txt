@@ -1,3 +1,7 @@
+=== 0.0.7 2015-05-31
+
+* update README  #3
+
 === 0.0.6 2015-05-29
 
 * fix for latest request npm

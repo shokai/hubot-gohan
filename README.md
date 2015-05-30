@@ -13,12 +13,13 @@ Install
 -------
 
     % npm install hubot-gohan -save
+    % npm install coffee-script@">=1.9" -save
 
 
 ### edit `external-script.json`
 
 ```json
-["hubot-gohan"]
+[ "hubot-gohan" ]
 ```
 
 Usage

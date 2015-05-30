@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "coffee-errors": "*",
-    "coffee-script": "^1.8",
+    "coffee-script": "^1.9",
     "coffeelint": "*",
     "grunt": "*",
     "grunt-cli": "*",
